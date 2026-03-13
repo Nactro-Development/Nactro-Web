@@ -15,6 +15,7 @@ import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
+import ClientAuth from "@/pages/ClientAuth";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ function App() {
               <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/signin" component={ClientAuth} />
                 <Route>
                   <MainLayout>
                     <Switch>
