@@ -13,9 +13,21 @@ import Products from "@/pages/Products";
 import Blog from "@/pages/Blog";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+import Login from "@/pages/Login";
+import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
+
+function MainLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground">
+      <Navbar />
+      <main className="flex-grow flex flex-col">{children}</main>
+      <Footer />
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -24,20 +36,22 @@ function App() {
         <ThemeProvider defaultTheme="dark" storageKey="nactro-theme">
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground">
-                <Navbar />
-                <main className="flex-grow flex flex-col">
-                  <Switch>
-                    <Route path="/" component={Home} />
-                    <Route path="/products" component={Products} />
-                    <Route path="/blog" component={Blog} />
-                    <Route path="/about" component={About} />
-                    <Route path="/contact" component={Contact} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </main>
-                <Footer />
-              </div>
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route>
+                  <MainLayout>
+                    <Switch>
+                      <Route path="/" component={Home} />
+                      <Route path="/products" component={Products} />
+                      <Route path="/blog" component={Blog} />
+                      <Route path="/about" component={About} />
+                      <Route path="/contact" component={Contact} />
+                      <Route component={NotFound} />
+                    </Switch>
+                  </MainLayout>
+                </Route>
+              </Switch>
             </WouterRouter>
             <Toaster />
           </TooltipProvider>
