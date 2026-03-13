@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Shield, Menu, X, Sun, Moon } from "lucide-react";
+import { Shield, Menu, X, Sun, Moon, LayoutDashboard, LogIn } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -9,6 +10,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { isLoggedIn } = useAuth();
   const [location] = useLocation();
 
   useEffect(() => {
@@ -35,8 +37,8 @@ export function Navbar() {
     <header
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent",
-        isScrolled 
-          ? "bg-background/80 backdrop-blur-md border-border/50 shadow-sm" 
+        isScrolled
+          ? "bg-background/80 backdrop-blur-md border-border/50 shadow-sm"
           : "bg-transparent py-2"
       )}
     >
@@ -44,7 +46,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors overflow-hidden">
               <Shield className="w-6 h-6 text-primary" />
             </div>
             <span className="font-display font-bold text-xl tracking-wide group-hover:text-primary transition-colors">
@@ -55,8 +57,8 @@ export function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 href={link.href}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
@@ -69,7 +71,7 @@ export function Navbar() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
@@ -77,15 +79,33 @@ export function Navbar() {
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
+
+            {/* Admin / Dashboard button */}
+            {isLoggedIn ? (
+              <Link href="/dashboard">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors">
+                  <LayoutDashboard className="w-4 h-4" />
+                  Dashboard
+                </button>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-sm font-medium hover:bg-secondary hover:text-foreground transition-colors">
+                  <LogIn className="w-4 h-4" />
+                  Admin
+                </button>
+              </Link>
+            )}
+
             <Link href="/products">
-              <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-0 box-glow rounded-full px-6 transition-all duration-300 hover:scale-105 font-semibold">
+              <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-0 rounded-full px-6 transition-all duration-300 hover:scale-105 font-semibold">
                 Get Started
               </Button>
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="md:hidden flex items-center gap-3">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-full hover:bg-secondary text-muted-foreground"
@@ -112,15 +132,34 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "block px-3 py-3 rounded-md text-base font-medium",
-                  location === link.href 
-                    ? "bg-primary/10 text-primary" 
+                  location === link.href
+                    ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 )}
               >
                 {link.name}
               </Link>
             ))}
-            <div className="pt-4 px-3">
+
+            <div className="pt-2 border-t border-border">
+              {isLoggedIn ? (
+                <Link href="/dashboard">
+                  <div className="flex items-center gap-2 px-3 py-3 rounded-md text-base font-medium text-primary bg-primary/10">
+                    <LayoutDashboard className="w-5 h-5" />
+                    Dashboard
+                  </div>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <div className="flex items-center gap-2 px-3 py-3 rounded-md text-base font-medium text-muted-foreground hover:bg-secondary hover:text-foreground">
+                    <LogIn className="w-5 h-5" />
+                    Admin Login
+                  </div>
+                </Link>
+              )}
+            </div>
+
+            <div className="pt-2 px-3">
               <Link href="/products">
                 <Button className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground">
                   Get Started
