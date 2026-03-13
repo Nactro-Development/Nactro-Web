@@ -1,7 +1,134 @@
+import { useState } from "react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { FadeIn } from "@/components/animations/FadeIn";
-import { UserCheck, Monitor, Globe, Cpu, Code2, ArrowRight } from "lucide-react";
+import { UserCheck, Monitor, Globe, Cpu, Code2, ArrowRight, X, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
+
+const DESKTOP_PROJECTS = [
+  {
+    id: 1,
+    title: "Project Sample 1",
+    description: "Add your project description here.",
+    image: null,
+    tech: ["WPF", "C#"],
+  },
+  {
+    id: 2,
+    title: "Project Sample 2",
+    description: "Add your project description here.",
+    image: null,
+    tech: ["WinUI 3", ".NET"],
+  },
+  {
+    id: 3,
+    title: "Project Sample 3",
+    description: "Add your project description here.",
+    image: null,
+    tech: ["WPF", "SQL Server"],
+  },
+  {
+    id: 4,
+    title: "Project Sample 4",
+    description: "Add your project description here.",
+    image: null,
+    tech: ["WinUI 3", "C#"],
+  },
+];
+
+function DesktopProjectsModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-background border border-border rounded-2xl p-0 gap-0">
+        <div className="sticky top-0 z-10 bg-background border-b border-border px-8 py-6 flex items-start justify-between">
+          <DialogHeader className="flex-1">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="p-2 rounded-lg bg-secondary border border-border/50">
+                <Monitor className="w-6 h-6 text-accent" />
+              </div>
+              <DialogTitle className="text-2xl font-bold">Desktop Applications</DialogTitle>
+            </div>
+            <p className="text-muted-foreground text-sm mt-1">
+              Custom Windows software built with WPF and WinUI 3 for business automation.
+            </p>
+          </DialogHeader>
+          <DialogClose asChild>
+            <button className="ml-4 mt-1 p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground flex-shrink-0">
+              <X className="w-5 h-5" />
+            </button>
+          </DialogClose>
+        </div>
+
+        <div className="px-8 py-8">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Project Samples</span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {DESKTOP_PROJECTS.map((project) => (
+              <div
+                key={project.id}
+                className="group bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)]"
+              >
+                <div className="relative w-full h-48 bg-secondary flex items-center justify-center border-b border-border overflow-hidden">
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                      <Monitor className="w-10 h-10 opacity-30" />
+                      <span className="text-xs font-medium opacity-50">Screenshot goes here</span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+
+                <div className="p-5">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 p-5 rounded-xl border border-dashed border-border bg-secondary/20 text-center">
+            <p className="text-sm text-muted-foreground">
+              More projects coming soon — check back for updates.
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 const PRODUCTS = [
   {
@@ -10,7 +137,8 @@ const PRODUCTS = [
     category: "HR & Workforce",
     icon: <UserCheck className="w-10 h-10 text-primary" />,
     description:
-      "Complete workforce management with fingerprint device integration, real-time working hours tracking, break time calculation, overtime reports, and payroll-ready exports. Built for businesses that demand accuracy."
+      "Complete workforce management with fingerprint device integration, real-time working hours tracking, break time calculation, overtime reports, and payroll-ready exports.",
+    hasModal: false,
   },
   {
     id: "desktop",
@@ -18,7 +146,8 @@ const PRODUCTS = [
     category: "Windows Software",
     icon: <Monitor className="w-10 h-10 text-accent" />,
     description:
-      "Custom Windows software built with WPF and WinUI 3 — modern, high-performance desktop applications tailored for business automation, internal tools, and enterprise workflows."
+      "Custom Windows software built with WPF and WinUI 3 — modern, high-performance desktop applications tailored for business automation, internal tools, and enterprise workflows.",
+    hasModal: true,
   },
   {
     id: "web",
@@ -26,7 +155,8 @@ const PRODUCTS = [
     category: "Digital Platforms",
     icon: <Globe className="w-10 h-10 text-primary" />,
     description:
-      "From business landing pages to full-scale admin dashboards, cloud web apps, and custom web platforms — we design and develop scalable web solutions that grow with your business."
+      "From business landing pages to full-scale admin dashboards, cloud web apps, and custom web platforms — scalable web solutions that grow with your business.",
+    hasModal: false,
   },
   {
     id: "iot",
@@ -34,7 +164,8 @@ const PRODUCTS = [
     category: "Embedded Systems",
     icon: <Cpu className="w-10 h-10 text-accent" />,
     description:
-      "Smart automation systems and sensor monitoring solutions built on ESP8266 and Arduino. We bring physical environments online with reliable, real-time connected device integrations."
+      "Smart automation systems and sensor monitoring solutions built on ESP8266 and Arduino. We bring physical environments online with reliable, real-time connected device integrations.",
+    hasModal: false,
   },
   {
     id: "custom",
@@ -42,11 +173,14 @@ const PRODUCTS = [
     category: "Bespoke Solutions",
     icon: <Code2 className="w-10 h-10 text-primary" />,
     description:
-      "Every business is unique. We build tailor-made software solutions designed around your exact requirements — from concept and architecture to deployment and long-term support."
-  }
+      "Every business is unique. We build tailor-made software solutions designed around your exact requirements — from concept and architecture to deployment and long-term support.",
+    hasModal: false,
+  },
 ];
 
 export default function Products() {
+  const [desktopModalOpen, setDesktopModalOpen] = useState(false);
+
   return (
     <PageWrapper
       title="Products & Solutions | Nactro"
@@ -85,19 +219,31 @@ export default function Products() {
                   <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
                     {product.name}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-8">
+                  <p className="text-muted-foreground leading-relaxed">
                     {product.description}
                   </p>
                 </div>
 
                 <div className="p-8 pt-0 mt-auto">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-between group/btn hover:bg-primary/10 hover:text-primary hover:border-primary/30 h-12 rounded-xl"
-                  >
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
+                  {product.hasModal ? (
+                    <Button
+                      variant="outline"
+                      className="w-full justify-between group/btn hover:bg-primary/10 hover:text-primary hover:border-primary/30 h-12 rounded-xl"
+                      onClick={() => setDesktopModalOpen(true)}
+                    >
+                      <span>View Projects</span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="w-full justify-between group/btn hover:bg-primary/10 hover:text-primary hover:border-primary/30 h-12 rounded-xl"
+                      onClick={() => (window.location.href = "/contact")}
+                    >
+                      <span>Get in Touch</span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </FadeIn>
@@ -124,6 +270,11 @@ export default function Products() {
           </FadeIn>
         </div>
       </section>
+
+      <DesktopProjectsModal
+        open={desktopModalOpen}
+        onClose={() => setDesktopModalOpen(false)}
+      />
     </PageWrapper>
   );
 }
