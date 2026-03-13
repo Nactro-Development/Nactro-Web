@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Shield, Lock, Server, ArrowRight, CheckCircle2, Zap } from "lucide-react";
+import { UserCheck, Monitor, Globe, ArrowRight, CheckCircle2, Zap } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ export default function Home() {
 
           <FadeIn delay={0.2}>
             <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
-              We engineer military-grade software development platforms and proactive cybersecurity tools to protect your digital perimeter.
+              We build smart software solutions for real businesses — from fingerprint attendance systems and Windows apps to web platforms and IoT devices.
             </p>
           </FadeIn>
 
@@ -65,9 +65,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Enterprise Infrastructure</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">What We Build For You</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Purpose-built tools designed to integrate seamlessly into your development pipeline without compromising velocity.
+                From desktop software to connected IoT devices — we cover the full spectrum of modern business technology needs.
               </p>
             </div>
           </FadeIn>
@@ -75,19 +75,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Shield className="w-8 h-8 text-primary" />,
-                title: "Endpoint Defense",
-                desc: "Real-time threat detection and autonomous remediation across all organizational nodes."
+                icon: <UserCheck className="w-8 h-8 text-primary" />,
+                title: "Attendance System",
+                desc: "Fingerprint-integrated workforce tracking with payroll exports, overtime reports, and break time calculation."
               },
               {
-                icon: <Lock className="w-8 h-8 text-accent" />,
-                title: "Zero-Trust Networks",
-                desc: "Identity-based micro-segmentation ensuring absolute data transit integrity."
+                icon: <Monitor className="w-8 h-8 text-accent" />,
+                title: "Desktop Applications",
+                desc: "Custom Windows software built with WPF and WinUI 3 for business automation and internal tooling."
               },
               {
-                icon: <Server className="w-8 h-8 text-primary" />,
-                title: "Secure Repositories",
-                desc: "Vault-encrypted code storage with automated vulnerability scanning on commit."
+                icon: <Globe className="w-8 h-8 text-primary" />,
+                title: "Web Development",
+                desc: "Business websites, admin dashboards, cloud web apps, and custom web platforms built to scale."
               }
             ].map((feature, i) => (
               <FadeIn key={i} delay={0.1 * (i + 1)}>
@@ -118,10 +118,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: "99.99%", label: "Uptime SLA" },
-              { value: "50M+", label: "Threats Blocked" },
-              { value: "24/7", label: "Active SOC" },
-              { value: "<5ms", label: "Latency" }
+              { value: "5+", label: "Product Lines" },
+              { value: "100%", label: "Custom Built" },
+              { value: "IoT", label: "to Enterprise" },
+              { value: "24/7", label: "Support Ready" }
             ].map((stat, i) => (
               <FadeIn key={i} delay={0.1 * i}>
                 <div className="p-4">
@@ -142,9 +142,9 @@ export default function Home() {
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
           <FadeIn className="flex-1" direction="right">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Trusted by developers, mandated by security teams.</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Built for businesses that need real technology.</h2>
             <ul className="space-y-4 mb-8">
-              {["SOC2 Type II Certified", "GDPR & HIPAA Compliant", "End-to-End Encryption", "Immutable Audit Logs"].map((item, i) => (
+              {["Fingerprint-integrated attendance & HR tools", "Custom desktop apps with WPF & WinUI 3", "Full-stack web and cloud platforms", "ESP8266 & Arduino IoT automation systems"].map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
                   <span className="text-lg text-muted-foreground">{item}</span>
@@ -152,7 +152,7 @@ export default function Home() {
               ))}
             </ul>
             <Link href="/about">
-              <Button variant="outline" className="h-12 px-6 rounded-xl">Read our Security Manifesto</Button>
+              <Button variant="outline" className="h-12 px-6 rounded-xl">Learn About Nactro</Button>
             </Link>
           </FadeIn>
           <FadeIn className="flex-1 w-full" direction="left">
