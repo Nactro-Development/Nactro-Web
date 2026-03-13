@@ -1,0 +1,19 @@
+packages:
+  "framer-motion": "For page transitions and smooth scroll animations"
+  "react-helmet-async": "For SEO meta tags management"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility function to efficiently merge Tailwind CSS classes"
+  "lucide-react": "For modern iconography across the application"
+
+images:
+  - path: "artifacts/nactro/public/images/hero-bg.png"
+    description: "Dark futuristic cyber technology abstract background with glowing electric blue and cyan geometric lines, deep navy background, sharp modern minimal style"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nactro/public/images/about-vision.png"
+    description: "Abstract digital landscape with glowing nodes and data streams, dark mode cyber aesthetic, representing a secure digital future"
+    aspect_ratio: "16:9"
+
+notes:
+  - Application uses wouter for routing.
+  - Theme defaults to dark mode as requested, with a cyber/tech aesthetic.
+  - Form submissions are mock-handled via a React Query mutation to satisfy frontend interaction completeness.
