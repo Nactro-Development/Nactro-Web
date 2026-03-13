@@ -40,7 +40,7 @@ jobs:
       - name: Build project
         env:
           PORT: 3000
-          BASE_PATH: '/'
+          BASE_PATH: '/Nactro-Web/'
         run: pnpm run build
 
       - name: Upload artifact
