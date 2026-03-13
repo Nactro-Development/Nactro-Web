@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import {
-  Shield, Monitor, Globe, Cpu, Code2, LogOut, Plus, Trash2,
-  X, Upload, Edit2, Save, LayoutDashboard, ChevronRight, Image as ImageIcon,
+  Monitor, Globe, Cpu, Code2, LogOut, Plus, Trash2,
+  X, Upload, Edit2, Save, LayoutDashboard, ChevronRight, Image as ImageIcon, Shield,
 } from "lucide-react";
+import logoImg from "/logo.png";
 import { useAuth } from "@/hooks/use-auth";
 import { useProjects, type ProductId, type Project } from "@/hooks/use-projects";
 
@@ -280,13 +281,8 @@ export default function Dashboard() {
     <div className="min-h-screen bg-background text-foreground flex">
       <aside className="w-64 flex-shrink-0 bg-card border-r border-border flex flex-col">
         <div className="px-5 py-5 border-b border-border">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-              <Shield className="w-4 h-4 text-primary" />
-            </div>
-            <span className="font-black tracking-tight text-lg">NACTRO</span>
-          </div>
-          <p className="text-xs text-muted-foreground mt-1 pl-10">Admin Dashboard</p>
+          <img src={logoImg} alt="Nactro" className="h-7 w-auto object-contain mb-1" />
+          <p className="text-xs text-muted-foreground mt-1">Admin Dashboard</p>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">

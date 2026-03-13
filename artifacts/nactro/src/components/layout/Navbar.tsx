@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Shield, Menu, X, Sun, Moon, LayoutDashboard, LogIn } from "lucide-react";
+import { Menu, X, Sun, Moon, LayoutDashboard, LogIn } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import logoImg from "/logo.png";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,13 +46,12 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors overflow-hidden">
-              <Shield className="w-6 h-6 text-primary" />
-            </div>
-            <span className="font-display font-bold text-xl tracking-wide group-hover:text-primary transition-colors">
-              NACTRO
-            </span>
+          <Link href="/" className="flex items-center cursor-pointer">
+            <img
+              src={logoImg}
+              alt="Nactro"
+              className="h-9 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Nav */}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Shield, Eye, EyeOff, LogIn } from "lucide-react";
+import { Eye, EyeOff, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import logoImg from "/logo.png";
 
 export default function Login() {
   const { login } = useAuth();
@@ -34,11 +35,8 @@ export default function Login() {
 
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary" />
-            </div>
-            <span className="text-2xl font-black tracking-tight text-foreground">NACTRO</span>
+          <div className="flex justify-center mb-6">
+            <img src={logoImg} alt="Nactro" className="h-10 w-auto object-contain" />
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Admin Login</h1>
           <p className="text-muted-foreground text-sm">Sign in to manage your projects</p>
