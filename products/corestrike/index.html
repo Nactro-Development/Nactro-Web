@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CoreStrike | High-Performance Hardware Monitoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#3f465c",
+                        "on-tertiary-fixed-variant": "#3a485c",
+                        "on-primary": "#00390e",
+                        "tertiary-fixed": "#d5e3fd",
+                        "on-background": "#dce1fb",
+                        "background": "#0c1324",
+                        "secondary": "#bec6e0",
+                        "primary-container": "#22ff5f",
+                        "primary-fixed-dim": "#00e551",
+                        "surface-tint": "#00e551",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#dae2fd",
+                        "on-tertiary-fixed": "#0d1c2f",
+                        "primary-fixed": "#6eff7d",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "surface": "#0c1324",
+                        "on-secondary-fixed": "#131b2e",
+                        "on-primary-fixed-variant": "#005318",
+                        "surface-dim": "#0c1324",
+                        "surface-bright": "#33394c",
+                        "surface-container-highest": "#2e3447",
+                        "surface-container-high": "#23293c",
+                        "primary": "#efffe8",
+                        "inverse-surface": "#dce1fb",
+                        "tertiary": "#fafaff",
+                        "on-primary-fixed": "#002105",
+                        "error-container": "#93000a",
+                        "outline-variant": "#3b4b39",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "on-tertiary-container": "#546278",
+                        "on-primary-container": "#007123",
+                        "surface-container-lowest": "#070d1f",
+                        "on-surface-variant": "#baccb5",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#adb4ce",
+                        "on-secondary": "#283044",
+                        "surface-container-low": "#151b2d",
+                        "inverse-on-surface": "#2a3043",
+                        "outline": "#849580",
+                        "on-tertiary": "#233144",
+                        "inverse-primary": "#006e22",
+                        "surface-variant": "#2e3447",
+                        "tertiary-container": "#d0dff8",
+                        "on-surface": "#dce1fb",
+                        "surface-container": "#191f31",
+                        "tertiary-fixed-dim": "#b9c7e0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "0.25rem",
+                        "md": "1rem",
+                        "base": "4px",
+                        "xl": "2rem",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "lg": "1.5rem",
+                        "margin-mobile": "16px",
+                        "sm": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"],
+                        "headline-xl": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "title-md": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        :root {
+            --bg-color: #0c1324;
+            --dot-color: rgba(34, 255, 95, 0.03);
+            --card-bg: #191f31;
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        html:not(.dark) {
+            --bg-color: #f8fafc;
+            --dot-color: rgba(34, 255, 95, 0.1);
+            --card-bg: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 2px 2px, var(--dot-color) 1px, transparent 0);
+            background-size: 40px 40px;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(34, 255, 95, 0.3);
+            box-shadow: 0 0 20px rgba(34, 255, 95, 0.05);
+        }
+        .hero-glow {
+            box-shadow: 0 0 80px -20px rgba(34, 255, 95, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .carousel-slide {
+            min-width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+    </style>
+<script>
+        // Theme initialization logic (run immediately to prevent flash)
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+
+        // Carousel Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('carouselTrack');
+            if (!track) return;
+            const slides = track.children;
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            let currentIndex = 0;
+
+            const updateCarousel = (index) => {
+                track.style.transform = `translateX(-${index * 100}%)`;
+                indicators.forEach((dot, i) => {
+                    dot.classList.toggle('bg-primary-container', i === index);
+                    dot.classList.toggle('bg-white/20', i !== index);
+                });
+            };
+
+            const nextSlide = () => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel(currentIndex);
+            };
+
+            let interval = setInterval(nextSlide, 5000);
+
+            indicators.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel(currentIndex);
+                    clearInterval(interval);
+                    interval = setInterval(nextSlide, 5000);
+                });
+            });
+
+            // Theme Toggle Logic
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const isDark = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                });
+            }
+        });
+    </script>
+</head>
+<body class="text-on-surface dark:text-on-surface antialiased bg-background font-sans">
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 px-margin-desktop py-4 flex justify-between items-center mx-auto transition-colors duration-300">
+<div class="flex items-center gap-4">
+<img alt="CoreStrike Logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVuIPlmfn6O0T5GTDXsXU33bESQBfAgrXsR9RIHvjdi-CwE4j3mr70vBkWR7ZUWCDSNehWJIHt1MAzDz27AJ48nwFlEqlGT_oSACunuwbcOJBbE-697DKMV4wWe-9dFlti-FzT1EcdCN0Xv0LbUAnzHjVCioOw7IKXzgwkQn7H6zvTlooGW8_7PjhWfhxVcPsirfcWHGH8gX7gMkLUKSw8guf5d40oampYfiUAgKnVGOTBLfAxy481JB2Tqy0zEdXTSt5hQvmsF0U"/>
+<span class="font-headline-lg text-title-md font-bold tracking-tighter text-primary-container">CoreStrike</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-slate-600 dark:text-on-surface-variant/70 hover:text-primary-fixed-dim transition-colors font-label-sm text-label-sm uppercase" href="#">Features</a>
+<a class="text-slate-600 dark:text-on-surface-variant/70 hover:text-primary-fixed-dim transition-colors font-label-sm text-label-sm uppercase" href="#">Download</a>
+<a class="text-slate-600 dark:text-on-surface-variant/70 hover:text-primary-fixed-dim transition-colors font-label-sm text-label-sm uppercase" href="#">GitHub</a>
+<button aria-label="Toggle Theme" class="p-2 rounded-lg border border-outline-variant/20 text-slate-600 dark:text-on-surface-variant/70 hover:text-primary-fixed-dim hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center" id="themeToggle">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 font-label-sm text-label-sm rounded-lg hover:brightness-110 active:scale-95 transition-all">
+                Download Now
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-40 pb-20 px-margin-desktop overflow-hidden">
+<div class="max-w-6xl mx-auto text-center relative z-10">
+<h1 class="font-headline-xl text-headline-xl md:text-[80px] mb-6 tracking-tight text-slate-900 dark:text-white">
+                Master Your <span class="text-primary-container">Hardware.</span>
+</h1>
+<p class="font-body-lg text-slate-600 dark:text-on-surface-variant max-w-2xl mx-auto mb-12">
+                Professional-grade real-time monitoring for enthusiasts and power users. 
+                උසස් තත්ත්වයේ දෘඪාංග නිරීක්ෂණ පද්ධතිය.
+            </p>
+<div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 font-label-sm text-label-sm flex items-center gap-2 hover:brightness-110 transition-all rounded-lg group shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined">download</span>
+                    DOWNLOAD FOR WINDOWS
+                </button>
+<button class="border border-slate-300 dark:border-outline px-10 py-4 font-label-sm text-label-sm flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-white/5 transition-all rounded-lg text-slate-700 dark:text-on-surface">
+<span class="material-symbols-outlined">code</span>
+                    VIEW ON GITHUB
+                </button>
+</div>
+</div>
+<!-- Image Carousel -->
+<div class="mt-20 max-w-5xl mx-auto hero-glow rounded-xl overflow-hidden border border-outline-variant/30 carousel-container relative shadow-2xl">
+<div class="carousel-track" id="carouselTrack" style="transform: translateX(0%);">
+<img alt="CoreStrike Dashboard Preview" class="carousel-slide" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1g0IdI70tW0l9c63tfUh-p7vON-QNYWvK8z_GLQaV7FII5GLgIHdRhKiptfWtW1PqPfgFBrxudAMlFcG8somKPglKWjXKreveeoFKfnJdfjfThBb5FCWZNMDnpMq_yK-OVF4MyCH2e-kZsvyMZX_b_F9d2Gz-qbS7mVwSJzihCYpIfpWFik0lGZkTuQCimyZNaQM5zZDjPBlknsZDERSpe2lQH3nlBvhmfJMVZkgVgjoktDLzjEtTDNJvuw3QtDV-iF_QfDaMb7k"/>
+<img alt="High-Performance Hardware" class="carousel-slide" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDko12wETnYfdYVNx7lFQZBu92t7NwFxL2xYZeGLHkgqGrfU2wxmNpDd-4lusbU-XrnyLv-B8hdwzANG5w3mk5PbwXAibUEesMQzZ1ZzwC0CvdNmvpAAZUomn86YDBpjsVXDP-QvWFtdR2UEMC86okfUs9SiH7fMvaqfqC0bOUEEnCFDPyiPd7VfOg2q9fP2EOT19YD3RbXdijffYHcaPRN8A_YzwrpLEP9j-nncSece29wM66sNTdnR-DXpaRbSkHgGQE9szCwMgA"/>
+<img alt="Tech Analytics Dashboard" class="carousel-slide" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7MUBbE3a0-OZx9oL4X1L36SBxCqLqO0aWqvmwcrsRuV11EurO6EhDhPXeX5p7FhlVaRPyHuKR8u3J1TTCiymDYtEq5JkyXAoJaCtQeajeipG4tMRzOqW7VXP62v-6tJdFiHIklP3Os9Rg24V_-I2DA_Rk0RJTKheUxbkLfP0J0Ye92vhnSPOduyxr5kTq5Th7eHv5tqPPY7YUA5btmVsuL88NW-2hu9X2zc0-e-gOwJTM6CWU_qUaVtttZL-ALj-8CQM5LSIuGQQ"/>
+</div>
+<!-- Carousel Controls -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+<button aria-label="Slide 1" class="carousel-indicator w-3 h-3 rounded-full transition-all bg-primary-container"></button>
+<button aria-label="Slide 2" class="carousel-indicator w-3 h-3 rounded-full transition-all bg-white/20"></button>
+<button aria-label="Slide 3" class="carousel-indicator w-3 h-3 rounded-full transition-all bg-white/20"></button>
+</div>
+</div>
+</header>
+<!-- Features Section -->
+<section class="py-24 px-margin-desktop bg-slate-100/50 dark:bg-surface-container-lowest/30 transition-colors">
+<div class="max-w-6xl mx-auto">
+<div class="mb-16">
+<h2 class="font-label-sm text-label-sm text-primary-container mb-2 uppercase tracking-[0.2em]">Core Engine</h2>
+<h3 class="font-headline-lg text-headline-lg text-slate-900 dark:text-white">Built for Maximum Precision.</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-card p-8 rounded-xl flex flex-col gap-6">
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md mb-2 text-emerald-700 dark:text-primary">Real-time CPU/GPU Tracking</h4>
+<p class="font-body-md text-slate-600 dark:text-on-surface-variant">Instant telemetry for your silicon. Millisecond-perfect polling rates for overclockers and power users.</p>
+</div>
+</div>
+<div class="glass-card p-8 rounded-xl flex flex-col gap-6">
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary-container">speed</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md mb-2 text-emerald-700 dark:text-primary">Low Resource Impact</h4>
+<p class="font-body-md text-slate-600 dark:text-on-surface-variant">CoreStrike runs with zero bloat. We use less than 0.1% CPU cycles even during intense gaming sessions.</p>
+</div>
+</div>
+<div class="glass-card p-8 rounded-xl flex flex-col gap-6">
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary-container">public</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md mb-2 text-emerald-700 dark:text-primary">Open Source</h4>
+<p class="font-body-md text-slate-600 dark:text-on-surface-variant">Transparent, secure, and community-driven. Built for hardware enthusiasts, by hardware enthusiasts.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Donation Section -->
+<section class="py-24 px-margin-desktop">
+<div class="max-w-4xl mx-auto glass-card p-12 rounded-xl text-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary-container"></div>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-slate-900 dark:text-white">Support Development</h2>
+<p class="font-body-lg text-slate-600 dark:text-on-surface-variant mb-10 max-w-2xl mx-auto">
+                CoreStrike is maintained by a small team of volunteers. Your donations directly contribute to server costs and future hardware support implementations. <br/>
+                CoreStrike පද්ධතිය පවත්වාගෙන යාම සඳහා ඔබගේ සහයෝගය අපට ඉතා අත්‍යවශ්‍ය වේ.
+            </p>
+<button class="bg-primary-container text-on-primary-container px-12 py-5 font-title-md text-title-md rounded-lg flex items-center gap-3 mx-auto hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined">volunteer_activism</span>
+                DONATE VIA PAYPAL
+            </button>
+</div>
+</section>
+<!-- GitHub Integration -->
+<section class="py-24 px-margin-desktop border-y border-slate-200 dark:border-outline-variant/10 transition-colors">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-slate-900 dark:text-white">Join the Ecosystem</h2>
+<p class="font-body-lg text-slate-600 dark:text-on-surface-variant">Contribute code, report issues, or star our repository to show your support.</p>
+</div>
+<div class="flex gap-4">
+<div class="glass-card px-8 py-6 rounded-xl text-center min-w-[140px]">
+<div class="font-headline-lg text-4xl text-primary-container mb-1">12.4k</div>
+<div class="font-label-sm text-label-sm text-slate-500 dark:text-on-surface-variant uppercase tracking-widest">Stars</div>
+</div>
+<div class="glass-card px-8 py-6 rounded-xl text-center min-w-[140px]">
+<div class="font-headline-lg text-4xl text-primary-container mb-1">1.2k</div>
+<div class="font-label-sm text-label-sm text-slate-500 dark:text-on-surface-variant uppercase tracking-widest">Forks</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop bg-slate-100 dark:bg-surface-container-lowest border-t border-outline-variant/20 transition-colors">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="flex items-center gap-4 mb-6 md:mb-0">
+<img alt="CoreStrike Logo" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVuIPlmfn6O0T5GTDXsXU33bESQBfAgrXsR9RIHvjdi-CwE4j3mr70vBkWR7ZUWCDSNehWJIHt1MAzDz27AJ48nwFlEqlGT_oSACunuwbcOJBbE-697DKMV4wWe-9dFlti-FzT1EcdCN0Xv0LbUAnzHjVCioOw7IKXzgwkQn7H6zvTlooGW8_7PjhWfhxVcPsirfcWHGH8gX7gMkLUKSw8guf5d40oampYfiUAgKnVGOTBLfAxy481JB2Tqy0zEdXTSt5hQvmsF0U"/>
+<span class="font-title-md text-title-md text-emerald-700 dark:text-primary font-bold">CoreStrike</span>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-label-sm text-label-sm text-slate-600 dark:text-on-surface-variant hover:text-primary-container transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-slate-600 dark:text-on-surface-variant hover:text-primary-container transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-slate-600 dark:text-on-surface-variant hover:text-primary-container transition-colors" href="#">Discord</a>
+<a class="font-label-sm text-label-sm text-slate-600 dark:text-on-surface-variant hover:text-primary-container transition-colors" href="#">Documentation</a>
+</div>
+<p class="font-body-md text-body-md text-slate-500 dark:text-on-surface-variant/60 text-center md:text-right mt-6 md:mt-0">
+                © 2024 CoreStrike Monitoring Systems. All rights reserved. Built for enthusiasts.
+            </p>
+</div>
+</footer>
+</body></html>
