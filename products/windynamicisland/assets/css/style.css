@@ -337,11 +337,20 @@ nav a:hover{
     display:inline-block;
 
 }
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.video-container video {
+    width: 60%;
+    height: auto;
+}
 
 .microsoft-store-image{
     margin-right:10px;
-width:150px;
+width:220px;
     vertical-align:middle;
 }
 
